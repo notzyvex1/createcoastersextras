@@ -2,34 +2,9 @@ package dev.notzyvex.coasters_extras;
 
 import net.neoforged.neoforge.common.ModConfigSpec;
 
-/**
- * Server-side tuning, exposed in {@code config/coasters_extras-server.toml}.
- *
- * <p>Server rather than common: these values decide how a coaster actually moves, so the
- * server has to be the one that owns them. On a common config a client with different numbers
- * would predict a different launch to the one the server performs, and the ride would visibly
- * stutter as the two corrected each other.
- *
- * <p>Values are read through the getters rather than cached in a static, because NeoForge
- * loads the config after mod construction and reloads it when the file changes on disk.
- * Every getter here calls {@code ConfigValue.get()} on the spot for that reason -- assigning
- * one of these to a {@code static final} anywhere would freeze it at whatever it was during
- * mod construction, which is before the file has been read at all.
- *
- * <p>Nothing here is written to the world save. These are session tuning numbers; the values
- * that DO persist are the per-anchorpoint dials ({@code StationBoostBehaviour},
- * {@code SendDirectionBehaviour}), which are not configured from this file. So no setting in
- * here can corrupt a save -- the worst a bad number does is make a ride behave badly until it
- * is changed back.
- *
- * <p>Each dial on an anchorpoint still overrides the matching value here. These are the
- * defaults every curve nobody has dialled in falls back to.
- */
 public final class Config {
 
     private static final ModConfigSpec.Builder B = new ModConfigSpec.Builder();
-
-    // ------------------------------------------------------------------ boost track
 
     private static final ModConfigSpec.DoubleValue BOOST_SPEED = B
             .comment("",
@@ -43,8 +18,6 @@ public final class Config {
                      "Low is a gentle shove over several blocks; high is an instant kick.")
             .defineInRange("boost.acceleration", 40.0, 0.1, 2000.0);
 
-    // ------------------------------------------------------------------ rainbow track
-
     private static final ModConfigSpec.DoubleValue RAINBOW_COLOUR_SCALE = B
             .comment("",
                      "How quickly the Rainbow Track's colour and chime move along the track.",
@@ -53,8 +26,6 @@ public final class Config {
                      "ride; lower means long sweeps of one colour. Drives both, so they always",
                      "stay in step with each other.")
             .defineInRange("rainbow.colourScale", 0.16, 0.001, 5.0);
-
-    // ---------------------------------------------------------------- bobsled track
 
     private static final ModConfigSpec.DoubleValue BOBSLED_MIN_SPEED = B
             .comment("",
@@ -96,8 +67,6 @@ public final class Config {
                      "instead of into them, set this true and they will lean the other way.")
             .define("bobsled.invertBank", false);
 
-    // ---------------------------------------------------------- powered boost track
-
     private static final ModConfigSpec.DoubleValue POWERED_BOOST_SPEED = B
             .comment("",
                      "How fast a Powered Boost Track drives carts while it has redstone,",
@@ -111,8 +80,6 @@ public final class Config {
                      "second squared. Kept separate from the plain boost so a signal-driven",
                      "launch can be violent without making every boost on the map violent.")
             .defineInRange("powered_boost.acceleration", 55.0, 0.1, 2000.0);
-
-    // ------------------------------------------------------------------ brake track
 
     private static final ModConfigSpec.DoubleValue BRAKE_TARGET_SPEED = B
             .comment("",
@@ -162,8 +129,6 @@ public final class Config {
                      "When a brake is set to stop carts completely, this last crawl is cancelled outright",
                      "instead of being braked, so the cart parks rather than creeping on forever.")
             .defineInRange("brake.deadStopSpeed", 0.8, 0.0, 10.0);
-
-    // ------------------------------------------------------------------ station track
 
     private static final ModConfigSpec.DoubleValue STATION_LAUNCH_SPEED = B
             .comment("",
@@ -243,8 +208,6 @@ public final class Config {
                      "Never allowed below station.dispatchWindowTicks, or a train would be forgotten mid-dispatch.")
             .defineInRange("station.forgetAfterTicks", 200, 60, 24000);
 
-    // ------------------------------------------------------------------ slippery track
-
     private static final ModConfigSpec.DoubleValue SLIPPERY_RECOVER = B
             .comment("",
                      "Fraction of its own speed a cart gets handed back per second on Slippery Track,",
@@ -261,8 +224,6 @@ public final class Config {
             .comment("",
                      "And it does nothing at all below this speed, so a parked cart is not flung off.")
             .defineInRange("slippery.minSpeed", 0.5, 0.0, 100.0);
-
-    // ------------------------------------------------------------------ splash track
 
     private static final ModConfigSpec.DoubleValue SPLASH_DRAG = B
             .comment("",
@@ -311,8 +272,6 @@ public final class Config {
                      "so a long water section is a splash rather than a continuous roar.")
             .defineInRange("splash.soundCooldownTicks", 22, 1, 200);
 
-    // ------------------------------------------------------------------ launch track
-
     private static final ModConfigSpec.DoubleValue LAUNCH_SPEED = B
             .comment("",
                      "How fast a Launch Track flings carts, in blocks per second.",
@@ -326,8 +285,6 @@ public final class Config {
                      "launch feel like a catapult instead of a strong boost.")
             .defineInRange("launch.acceleration", 130.0, 0.1, 5000.0);
 
-    // ------------------------------------------------------------------ reverse track
-
     private static final ModConfigSpec.DoubleValue REVERSE_MIN_SPEED = B
             .comment("",
                      "Below this speed a cart on a Reverse Track is treated as parked and left alone,",
@@ -340,8 +297,6 @@ public final class Config {
                      "which is what stops it juddering back and forth on the same piece of track.",
                      "Raise it if long trains bounce on a reverse; it cannot be set to 0 for that reason.")
             .defineInRange("reverse.cooldownTicks", 15, 1, 200);
-
-    // ------------------------------------------------------------------ driving a coaster
 
     private static final ModConfigSpec.DoubleValue DRIVER_RANGE = B
             .comment("",
@@ -379,8 +334,6 @@ public final class Config {
 
     public static final ModConfigSpec SPEC = B.build();
 
-    // ------------------------------------------------------------------ boost track
-
     public static double boostSpeed() {
         return BOOST_SPEED.get();
     }
@@ -389,13 +342,9 @@ public final class Config {
         return BOOST_ACCELERATION.get();
     }
 
-    // ------------------------------------------------------------------ rainbow track
-
     public static double rainbowColourScale() {
         return RAINBOW_COLOUR_SCALE.get();
     }
-
-    // ---------------------------------------------------------------- bobsled track
 
     public static double bobsledMinSpeed() {
         return BOBSLED_MIN_SPEED.get();
@@ -417,12 +366,9 @@ public final class Config {
         return BOBSLED_GRAVITY.get();
     }
 
-    /** +1 normally, -1 when the config asks for the lean to be flipped. */
     public static double bobsledBankSign() {
         return BOBSLED_INVERT.get() ? -1.0 : 1.0;
     }
-
-    // ---------------------------------------------------------- powered boost track
 
     public static double poweredBoostSpeed() {
         return POWERED_BOOST_SPEED.get();
@@ -431,8 +377,6 @@ public final class Config {
     public static double poweredBoostAcceleration() {
         return POWERED_BOOST_ACCELERATION.get();
     }
-
-    // ------------------------------------------------------------------ brake track
 
     public static double brakeTargetSpeed() {
         return BRAKE_TARGET_SPEED.get();
@@ -454,14 +398,6 @@ public final class Config {
         return BRAKE_SPARK_SPEED.get();
     }
 
-    /**
-     * Forced above {@link #brakeSparkSpeed()} rather than trusted as written.
-     *
-     * <p>The brake's effect strength is {@code (speed - spark) / (full - spark)}. Setting the two
-     * equal makes that 0/0, which is NaN, and a NaN particle spread is not something the rest of
-     * the code checks for. Ranges alone cannot express "must be greater than that other setting",
-     * so it is enforced here instead.
-     */
     public static double brakeFullEffectSpeed() {
         return Math.max(BRAKE_FULL_EFFECT_SPEED.get(), brakeSparkSpeed() + 0.01);
     }
@@ -473,8 +409,6 @@ public final class Config {
     public static double brakeDeadStopSpeed() {
         return BRAKE_DEAD_STOP_SPEED.get();
     }
-
-    // ------------------------------------------------------------------ station track
 
     public static double stationLaunchSpeed() {
         return STATION_LAUNCH_SPEED.get();
@@ -520,17 +454,9 @@ public final class Config {
         return STATION_DISPATCH_WINDOW_TICKS.get();
     }
 
-    /**
-     * Never shorter than the dispatch window.
-     *
-     * <p>Forgetting a station drops the record of it having just dispatched, so a shorter value
-     * than the window would let a station arrest the very train it had released.
-     */
     public static int stationForgetAfterTicks() {
         return Math.max(STATION_FORGET_AFTER_TICKS.get(), stationDispatchWindowTicks());
     }
-
-    // ------------------------------------------------------------------ slippery track
 
     public static double slipperyRecoverFraction() {
         return SLIPPERY_RECOVER.get();
@@ -543,8 +469,6 @@ public final class Config {
     public static double slipperyMinSpeed() {
         return SLIPPERY_MIN_SPEED.get();
     }
-
-    // ------------------------------------------------------------------ splash track
 
     public static double splashDrag() {
         return SPLASH_DRAG.get();
@@ -578,8 +502,6 @@ public final class Config {
         return SPLASH_SOUND_COOLDOWN_TICKS.get();
     }
 
-    // ------------------------------------------------------------------ launch track
-
     public static double launchSpeed() {
         return LAUNCH_SPEED.get();
     }
@@ -587,8 +509,6 @@ public final class Config {
     public static double launchAcceleration() {
         return LAUNCH_ACCELERATION.get();
     }
-
-    // ------------------------------------------------------------------ reverse track
 
     public static double reverseMinSpeed() {
         return REVERSE_MIN_SPEED.get();
@@ -598,13 +518,10 @@ public final class Config {
         return REVERSE_COOLDOWN_TICKS.get();
     }
 
-    // ------------------------------------------------------------------ driving a coaster
-
     public static double driverRange() {
         return DRIVER_RANGE.get();
     }
 
-    /** Squared here so the caller can compare against a squared distance without a sqrt. */
     public static double driverRangeSq() {
         double r = DRIVER_RANGE.get();
         return r * r;

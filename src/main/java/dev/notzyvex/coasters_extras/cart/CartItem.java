@@ -15,18 +15,6 @@ import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.phys.Vec3;
 import org.joml.Quaterniond;
 
-/**
- * Places a pre-built cart on the track.
- *
- * <p><b>The cart itself is the base mod's, not ours.</b> It is spawned through their own public
- * {@link CoasterCartSpawner}, so the block at its heart is genuinely {@code COASTER_CART} -- which
- * matters, because twenty-four classes in that mod compare against that block by identity rather
- * than by type. Anything of ours in its place would ride nothing, snap to nothing, and link to
- * nothing.
- *
- * <p>What we add is the bodywork: our chassis parts written into the cart's sublevel around it.
- * The result works exactly like a hand-built cart, because it IS one -- just assembled for you.
- */
 public class CartItem extends Item {
 
     private final CartPrefab prefab;
@@ -68,14 +56,11 @@ public class CartItem extends Item {
         return InteractionResult.CONSUME;
     }
 
-    /** Write the chassis into the cart's own sublevel. */
     private void build(ServerSubLevel cart) {
         LevelAccessor plot = cart.getPlot().getEmbeddedLevelAccessor();
         BlockPos origin = cart.getPlot().getCenterBlock();
         for (CartPrefab.Placement placement : prefab.parts()) {
             BlockPos target = origin.offset(placement.offset());
-            // Flag 2: send the change to clients without triggering neighbour updates. Neighbour
-            // updates inside a sublevel would ask blocks about a world they are not really in.
             plot.setBlock(target,
                     ModCartParts.PARTS.get(placement.part()).get().defaultBlockState(), 2);
         }

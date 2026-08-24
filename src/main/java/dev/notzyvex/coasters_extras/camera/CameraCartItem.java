@@ -11,13 +11,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 
-/**
- * Places a Camera Cart on the nearest track.
- *
- * <p>Placed by clicking near track rather than on a specific block, because a coaster's track is a
- * spline between anchorpoints -- most of it is not a block you can click at all. The entity snaps
- * itself to the nearest point on the curve.
- */
 public class CameraCartItem extends Item {
 
     public CameraCartItem(Properties properties) {

@@ -36,25 +36,14 @@ public class CoastersExtras {
 
     private void commonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(this::registerWithBalloonBlockEntity);
-        // Attaching a display source to a block has to wait until registries are frozen, so it
-        // belongs here rather than beside the DeferredRegister that created the sources.
         event.enqueueWork(dev.notzyvex.coasters_extras.display.ModDisplaySources::bind);
     }
 
-    /**
-     * Teach the base mod's balloon block entity type that our balloons are valid hosts.
-     *
-     * <p>Our blocks extend {@code RedBalloonBlock} so they already create a
-     * {@code BalloonBlockEntity}, but {@code BlockEntityType} keeps a fixed set of allowed
-     * blocks and theirs was built listing only {@code red_balloon}. Without this, the
-     * block entity is rejected on load and the balloon never tethers.
-     */
     private void registerWithBalloonBlockEntity() {
         try {
             BlockEntityType<?> type = SimulatedCoastersBlocks.BALLOON_BE.get();
             BlockEntityTypeAccessor accessor = (BlockEntityTypeAccessor) type;
 
-            // The existing set may be immutable, so copy before adding.
             Set<Block> valid = new HashSet<>(accessor.coasters_extras$getValidBlocks());
             for (var holder : ModBlocks.BALLOONS.values()) {
                 valid.add(holder.get());
@@ -64,8 +53,6 @@ public class CoastersExtras {
             LOGGER.info("Registered {} balloons with the Simulated Coasters balloon block entity.",
                     ModBlocks.BALLOONS.size());
         } catch (Throwable t) {
-            // Non-fatal: balloons still place and render, they just will not tether.
-            // Far better than hard-crashing the game if the base mod changes shape.
             LOGGER.error("Could not hook into Simulated Coasters' balloon block entity. "
                        + "Balloons will render but not behave as balloons. "
                        + "Has the base mod changed?", t);

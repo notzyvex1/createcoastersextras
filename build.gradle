@@ -6,12 +6,6 @@ plugins {
 version = mod_version
 group = mod_group_id
 
-// Name the jar the way the rest of the Create ecosystem does --
-// <modid>-<loader>-<mc version>-<mod version>.jar, e.g.
-//   coasters_extras-neoforge-1.21.1-0.1.0.jar
-// matching sable-neoforge-1.21.1-2.0.3.jar / flywheel-neoforge-1.21.1-1.0.6.jar.
-// The default was "CreateCoastersExtras-0.1.0.jar", which says nothing about which
-// Minecraft version or loader it is for -- the most common support question there is.
 base.archivesName = "${mod_id}-neoforge-${minecraft_version}"
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
@@ -19,11 +13,9 @@ java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 repositories {
     mavenCentral()
     maven { name = 'NeoForged';  url = 'https://maven.neoforged.net/releases' }
-    // Create + its deps (Registrate, Flywheel, Ponder)
     maven { name = 'Create';     url = 'https://maven.createmod.net' }
     maven { name = 'tterrag';    url = 'https://maven.tterrag.com/' }
     maven { name = 'ModMaven';   url = 'https://modmaven.dev' }
-    // local jars: Create: Coasters Simulated is not published to any maven
     flatDir { dirs 'libs' }
 }
 
@@ -61,12 +53,6 @@ neoForge {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 dependencies {
-    // Create: Coasters Simulated -- drop the jar into libs/ (see PROJECT.md).
-    // compileOnly so the build works even before the jar is present; it is a
-    // hard runtime dependency declared in neoforge.mods.toml.
-    // Create: Coasters Simulated + Sable. compileOnly: we need their types to
-    // compile against, but they are separate mods at runtime (declared as hard
-    // dependencies in neoforge.mods.toml), so we must NOT bundle them.
     compileOnly fileTree(dir: 'libs', include: ['*.jar'])
 }
 
@@ -76,16 +62,11 @@ tasks.withType(JavaCompile).configureEach {
 }
 
 processResources {
-    // MIT requires its notice to travel with the work, so both files ship inside the jar
-    // rather than sitting only in the repository.
     from(rootProject.file('LICENSE.md'))
     from(rootProject.file('THIRD-PARTY.md'))
 
-    // never ship editor leftovers; 19 .mtl.bak files shipped in 0.3.5
     exclude '**/*.bak', '**/*.orig', '**/*.tmp'
 
-    // NB: do NOT name this 'expand' -- a local of that name shadows Gradle's
-    // expand() method and the build fails with "LinkedHashMap.call() is not applicable".
     def replacements = [
         mod_id                  : mod_id,
         mod_name                : mod_name,

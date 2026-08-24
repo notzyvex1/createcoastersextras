@@ -8,17 +8,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Redirect;
 
-/**
- * Places the balloon colour the player is actually holding.
- *
- * <p>{@code BalloonSpawner.tryAttach} builds the block state to place from
- * {@code RED_BALLOON.get().defaultBlockState()}, and receives only a level and position --
- * it has no idea which item triggered it. Left alone, every one of our balloons attaches
- * as a red one.
- *
- * <p>{@link BalloonAttachInteractionMixin} records the held balloon just before their
- * handler runs; here we substitute it.
- */
 @Mixin(targets = "dev.silvergold.simulatedcoasters.balloon.BalloonSpawner", remap = false)
 public class BalloonSpawnerMixin {
 

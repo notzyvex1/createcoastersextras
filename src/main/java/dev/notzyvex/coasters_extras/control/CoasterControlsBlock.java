@@ -20,41 +20,15 @@ import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * Take the controls of the coaster you are sitting on.
- *
- * <p>Modelled on Create's Train Controls, and constrained the same way they are: the server
- * only receives a player's movement input while that player is a passenger, so driving is
- * only possible from a seat. Right-clicking while stood on the floor cannot work, and saying
- * so is better than quietly doing nothing.
- *
- * <p>Place it on the cart, sit down, right-click. Right-click again -- or simply stand up --
- * and you have let go.
- */
 public class CoasterControlsBlock extends HorizontalDirectionalBlock
         implements net.minecraft.world.level.block.EntityBlock {
 
     public static final com.mojang.serialization.MapCodec<CoasterControlsBlock> CODEC =
             simpleCodec(CoasterControlsBlock::new);
 
-    /**
-     * Which way the lever is thrown: 0 back, 1 centred, 2 forward.
-     *
-     * <p>Three positions rather than a continuous angle, because this rides on the block
-     * state and every change is a block update. Three covers what a driver is actually
-     * doing -- pulling back, coasting, or on the power -- and only changes when that changes.
-     */
     public static final net.minecraft.world.level.block.state.properties.IntegerProperty THROTTLE =
             net.minecraft.world.level.block.state.properties.IntegerProperty.create("throttle", 0, 2);
 
-    /**
-     * Matches the model's own footprint exactly -- full width, back three quarters of the
-     * block, floor to ceiling.
-     *
-     * <p>The front quarter is left open on purpose. That is the driver's side: it keeps the
-     * console from shoving you off the cart, and stops the hitbox claiming air in front of a
-     * face you are supposed to stand at.
-     */
     private static final VoxelShape SHAPE = Block.box(3, 0, 3, 13, 13, 13);
 
     public CoasterControlsBlock(Properties properties) {
@@ -86,12 +60,6 @@ public class CoasterControlsBlock extends HorizontalDirectionalBlock
         return SHAPE;
     }
 
-    // --- block entity, purely to animate the handle ----------------------------------------
-    //
-    // The block entity holds no game state -- the throttle is a block state property, synced
-    // for free. All it does is carry the eased handle angle so the renderer has something
-    // smooth to draw. Server-side it does nothing, so only a client ticker is registered.
-
     @Override
     public @Nullable net.minecraft.world.level.block.entity.BlockEntity newBlockEntity(
             BlockPos pos, BlockState state) {
@@ -116,8 +84,6 @@ public class CoasterControlsBlock extends HorizontalDirectionalBlock
     @Override
     protected InteractionResult useWithoutItem(BlockState state, Level level, BlockPos pos,
                                                Player player, BlockHitResult hit) {
-        // You have to be riding for this to be possible at all -- the client only reports
-        // movement input to the server while it is a passenger.
         if (!player.isPassenger()) {
             if (!level.isClientSide()) {
                 player.displayClientMessage(
@@ -128,8 +94,6 @@ public class CoasterControlsBlock extends HorizontalDirectionalBlock
         }
 
         if (level.isClientSide()) {
-            // Both sides toggle their own copy under the same condition, which keeps the
-            // speedometer in step without a packet of its own.
             dev.notzyvex.coasters_extras.client.ClientDriving.toggle();
             return InteractionResult.SUCCESS;
         }

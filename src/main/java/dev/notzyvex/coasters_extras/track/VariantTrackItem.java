@@ -15,23 +15,6 @@ import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 
-/**
- * A cosmetic track variant that lays exactly like the base mod's coaster track.
- *
- * <p>Extends their {@link CoasterTrackItem} so we inherit the whole anchorpoint workflow --
- * curves, bezier handles, validation. Previously these used Create's TrackBlockItem, which
- * placed them on the ground like ordinary Create track; that was the wrong mechanic.
- *
- * <p>Their placement code hardcodes the coaster material, so we publish ours into
- * {@link TrackPlacementContext} for the duration of the call and let
- * {@code CoasterTrackPlacementMixin} substitute it.
- *
- * <p><b>Sneak + right-click a block and the track becomes that block.</b> Every variant is a
- * copycat, not just the one called Copycat -- which is what people reach for, because Create's
- * own copycats work by showing them a material. Sneak is what keeps that from fighting
- * placement: a plain right-click still lays track, so the workflow nobody asked to change
- * is untouched.
- */
 public class VariantTrackItem extends CoasterTrackItem {
 
     private final TrackVariant variant;
@@ -63,8 +46,6 @@ public class VariantTrackItem extends CoasterTrackItem {
                         Component.translatable("coasters_extras.copycat.no_match",
                                 state.getBlock().getName()).withStyle(ChatFormatting.RED), true);
             }
-            // Consume rather than fall through: a sneak-click that missed should do nothing,
-            // not quietly start laying track somewhere you were not aiming.
             return InteractionResult.CONSUME;
         }
         if (match == variant) {
@@ -82,8 +63,6 @@ public class VariantTrackItem extends CoasterTrackItem {
         }
 
         ItemStack held = ctx.getItemInHand();
-        // The whole stack converts -- one at a time would mean sixty-four clicks to change
-        // the track you were about to lay.
         player.setItemInHand(ctx.getHand(), new ItemStack(
                 ModTrackVariants.ITEMS.get(match).get(), held.getCount()));
 

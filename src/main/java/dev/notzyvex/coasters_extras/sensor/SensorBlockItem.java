@@ -26,45 +26,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Map;
 
-/**
- * The Sensor Block as an item: link it to a Sensor Track first, then place it.
- *
- * <p>It deliberately cannot be placed until it is linked. A Sensor Block that watches nothing
- * is just a block that never turns on, and the only way to discover that is to wire it up and
- * wonder why the door never opens. Refusing the placement puts the mistake where it can be
- * understood.
- *
- * <p>Linking accepts a click anywhere along the track, not just on an anchorpoint. Aiming at a
- * curve makes the base mod retarget the hit to a block along it, so the position that arrives
- * here is somewhere near the curve rather than on either end -- this looks around it for the
- * nearest sensor curve and binds to that.
- */
 public class SensorBlockItem extends BlockItem {
 
-    /** How far from the click to look for anchorpoints that might own a sensor curve. */
     private static final int SEARCH = 6;
 
-    /**
-     * How close the click has to land to the track itself, in blocks.
-     *
-     * <p>Searching a box around the click and taking the nearest curve was wrong: standing
-     * beside a sensor track and clicking the FLOOR reported "Linked", because a curve was
-     * within reach even though it was nowhere near what you were pointing at. Being near a
-     * thing is not the same as clicking it, so the click point is now measured against the
-     * curve's own geometry.
-     */
     private static final double ON_TRACK = 1.6;
 
-    /**
-     * How close the player's line of sight has to pass to the rail, in blocks.
-     *
-     * <p>A curve is not a block, so right-clicking one produces no block hit on the track --
-     * the click lands on whatever is behind it, or nothing at all. Testing where the click
-     * landed therefore only ever worked when you clicked an anchorpoint. What actually means
-     * "I am pointing at that track" is the look ray passing through it, so that is what is
-     * measured. Tighter than {@link #ON_TRACK} because aiming is precise in a way that
-     * clicking a block face is not.
-     */
     private static final double ON_AIM = 0.8;
     private static final double REACH = 6.0;
 
@@ -82,10 +49,6 @@ public class SensorBlockItem extends BlockItem {
         Link found = findSensorCurve(level, clicked, context.getClickLocation(), player);
         if (found != null) {
             if (!level.isClientSide()) {
-                // Through vanilla's helper, not by setting the component directly. The
-                // BLOCK_ENTITY_DATA codec demands an "id" naming the block entity type and
-                // throws on save without it -- which meant a linked Sensor Block sitting in
-                // an inventory crashed the game on quit, when the player was written out.
                 BlockItem.setBlockEntityData(stack, SensorRegistry.SENSOR_BLOCK_ENTITY.get(),
                                              SensorBlockEntity.linkTag(found.a, found.b));
                 if (player != null) {
@@ -117,9 +80,6 @@ public class SensorBlockItem extends BlockItem {
         }
 
         InteractionResult result = super.place(context);
-        // Confirm on the way down as well as on the way in. Linking and placing are separate
-        // steps, and without this the second one is silent -- you are left guessing whether
-        // the block you just put down is the one you linked or a fresh unlinked spare.
         if (result.consumesAction()) {
             Player player = context.getPlayer();
             if (player != null && !context.getLevel().isClientSide()) {
@@ -140,9 +100,6 @@ public class SensorBlockItem extends BlockItem {
         CompoundTag tag = data == null ? null : data.copyTag();
         boolean linked = SensorBlockEntity.hasLink(tag);
 
-        // The link state goes above the fold. It is the one thing you need to know before
-        // deciding whether this stack is ready to place, and burying it behind shift would
-        // mean holding shift every time you picked one up.
         if (linked) {
             BlockPos a = SensorBlockEntity.readA(tag);
             tooltip.add(Component.translatable("coasters_extras.sensor.tip.linked",
@@ -173,17 +130,8 @@ public class SensorBlockItem extends BlockItem {
 
     private record Link(BlockPos a, BlockPos b) {}
 
-    /**
-     * The sensor curve nearest the clicked position, or null if there is none in reach.
-     *
-     * <p>Reflective, because the anchorpoint block entity belongs to the base mod and a
-     * missing method should cost a link rather than crash a right-click.
-     */
     private static @Nullable Link findSensorCurve(Level level, BlockPos clicked, Vec3 hit,
                                                   @Nullable Player player) {
-        // Where the player is looking, as a segment. Curves are checked against this as well
-        // as against the click, so aiming at a track binds even though the click itself
-        // landed on the ground behind it.
         Vec3 eye = player == null ? null : player.getEyePosition();
         Vec3 tip = eye == null ? null : eye.add(player.getLookAngle().scale(REACH));
 
@@ -201,7 +149,7 @@ public class SensorBlockItem extends BlockItem {
                 if (!(view instanceof Map<?, ?> m)) continue;
                 curves = m;
             } catch (Throwable ignored) {
-                continue;               // not an anchorpoint
+                continue;
             }
 
             for (Map.Entry<?, ?> e : curves.entrySet()) {
@@ -213,7 +161,6 @@ public class SensorBlockItem extends BlockItem {
                         || !"sensor_track".equals(id.getPath())) {
                     continue;
                 }
-                // Aimed at wins outright over merely clicked near.
                 double aim = eye == null ? Double.MAX_VALUE
                                          : distanceToCurve(bc, pos, peer, eye, tip);
                 if (aim <= ON_AIM * ON_AIM) {
@@ -234,20 +181,9 @@ public class SensorBlockItem extends BlockItem {
             }
         }
         if (bestByAim) return best;
-        // Near a sensor track is not the same as pointing at one.
         return bestDist <= ON_TRACK * ON_TRACK ? best : null;
     }
 
-    /**
-     * Shortest distance, squared, from a point to the curve's rail.
-     *
-     * <p>Sampled rather than solved: the exact nearest point on a cubic bezier is a quartic,
-     * and twenty-odd samples are far more precision than a click needs.
-     *
-     * <p>The samples are not guaranteed to be in world space -- some curves store their
-     * points relative to the owning block entity -- so rather than assume, this probes t=0
-     * against the two anchorpoints and offsets everything if it landed nowhere near either.
-     */
     private static double distanceToCurve(BezierConnection bc, BlockPos a, BlockPos b,
                                           Vec3 from, @Nullable Vec3 to) {
         Vec3 wa = Vec3.atCenterOf(a);
@@ -270,7 +206,6 @@ public class SensorBlockItem extends BlockItem {
         return best;
     }
 
-    /** Squared distance from a point to the segment from-to. */
     private static double distToSegment(Vec3 p, Vec3 from, Vec3 to) {
         Vec3 d = to.subtract(from);
         double len = d.lengthSqr();

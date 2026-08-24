@@ -10,14 +10,6 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-/**
- * Registration for the camera rig.
- *
- * <p>{@code MobCategory.MISC} keeps it out of mob caps and spawn logic -- it is equipment, not a
- * creature. The tracking range is generous because the point of the thing is to be watched
- * crossing a valley, and the default would have it vanish mid-shot from a viewpoint that can
- * plainly see the track it is on.
- */
 public final class ModCamera {
 
     public static final DeferredRegister<EntityType<?>> ENTITIES =
@@ -30,8 +22,6 @@ public final class ModCamera {
                     .<CameraCartEntity>of(CameraCartEntity::new, MobCategory.MISC)
                     .sized(0.6f, 0.6f)
                     .clientTrackingRange(12)
-                    // Every tick: its position is derived from the spline each tick, so a slower
-                    // interval shows it stepping along the track instead of gliding.
                     .updateInterval(1)
                     .build("camera_cart"));
 

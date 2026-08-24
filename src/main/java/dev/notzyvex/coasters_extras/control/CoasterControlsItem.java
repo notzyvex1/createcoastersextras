@@ -10,7 +10,6 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.List;
 
-/** Carries the Coaster Controls tooltip; the block itself does the work. */
 public class CoasterControlsItem extends BlockItem {
 
     public CoasterControlsItem(Block block, Properties properties) {

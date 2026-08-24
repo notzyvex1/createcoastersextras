@@ -16,16 +16,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-/**
- * Builds our creative tab's contents with a blank row reserved above each section.
- *
- * <p>The section banners are drawn over empty grid rows, which means the contents list has to
- * contain {@link ItemStack#EMPTY} entries. Vanilla's {@code Output.accept} rejects empty
- * stacks, so the list cannot be produced through the normal builder and is written directly
- * here instead.
- *
- * <p>Only our own tab is touched; every other tab falls through to vanilla untouched.
- */
 @Mixin(CreativeModeTab.class)
 public class CreativeTabContentsMixin {
 

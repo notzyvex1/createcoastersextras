@@ -6,12 +6,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 
-/**
- * Tags used by the mixins to decide "is this a balloon?".
- *
- * <p>Tag-based rather than a hard-coded block list so that new balloons -- ours or another
- * addon's -- start working by adding a datapack entry, with no code change.
- */
 public final class ModTags {
 
     public static final class Blocks {

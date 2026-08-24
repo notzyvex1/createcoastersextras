@@ -9,18 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Where carts are currently braking, sent to clients so their wheels can glow red.
- *
- * <p>Positions rather than cart ids, because of where the tint has to happen.
- * {@code CoasterCartWheelAxisRenderer.renderOneAxis} is handed a {@code worldOrigin} for the
- * wheel but no cart identity -- the id only exists in the loop above it. Sending positions
- * lets the renderer answer "is this wheel on a braking cart" with a distance check against a
- * handful of points, instead of threading an id through eight call sites.
- *
- * <p>Only sent when the set changes, and a braking cart is a rare, brief thing, so this is
- * near-silent on the wire.
- */
 public record BrakingPayload(List<double[]> positions) implements CustomPacketPayload {
 
     public static final Type<BrakingPayload> TYPE = new Type<>(

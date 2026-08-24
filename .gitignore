@@ -1,7 +1,5 @@
-# --- local toolchain (JDK + Gradle distribution, ~500MB) ---
 .tools/
 
-# --- gradle / build ---
 .gradle/
 build/
 out/
@@ -11,10 +9,8 @@ logs/
 src/generated/
 !src/generated/resources/
 
-# --- third-party jars we compile against (not ours to redistribute) ---
 libs/*.jar
 
-# --- IDE ---
 .idea/
 *.iml
 *.ipr
@@ -26,12 +22,10 @@ libs/*.jar
 bin/
 eclipse/
 
-# --- os ---
 Thumbs.db
 desktop.ini
 .DS_Store
 
-# --- working previews / scratch (regenerate with the scripts) ---
 *_preview.png
 rainbow_check.png
 rainbow_faces.png
@@ -40,30 +34,21 @@ item_preview.png
 balloon_preview.png
 resourcepacks/*.zip
 
-# generated dev pack - duplicates assets/, rebuild with gen_respack.py
 resourcepacks/CoastersExtras-Dev/
 
-# --- built jars are ignored, EXCEPT the released one in dist/ ---
-# The repo is how this mod moves between machines, so the jar that was actually
-# tested in game is committed rather than left as a build artifact.
 !dist/
 !dist/*.jar
 
-# third-party jars, any subfolder
 libs/**/*.jar
 __pycache__/
 *.pyc
 
-# generated store-page exports, rebuild with tools/md2cf.py
 *-curseforge.html
 *-plain.txt
 block_names.txt
 
-# previous repo history, kept locally as a backup
 .git.old/
 
-# Store pages, working notes and art sources -- kept locally, not published.
-# The repo is the mod: source, resources, build files, licence.
 CURSEFORGE.md
 CURSEFORGE-IMAGES.md
 MODRINTH.md

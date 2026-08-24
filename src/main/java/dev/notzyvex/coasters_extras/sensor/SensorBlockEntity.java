@@ -14,14 +14,6 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * Remembers which Sensor Track this block watches, and powers the block while a coaster is on it.
- *
- * <p>The link is stored as the two anchorpoints that a curve runs between, because that pair
- * is what identifies a curve -- the curve itself is not addressable. The pair is written onto
- * the item when you link it and copied in here when the block is placed, which is why an
- * unlinked Sensor Block cannot be placed at all: there would be nothing for it to watch.
- */
 public class SensorBlockEntity extends BlockEntity {
 
     private static final String KEY_A = "SensorA";
@@ -61,8 +53,6 @@ public class SensorBlockEntity extends BlockEntity {
         boolean was = state.getValue(SensorBlock.POWERED);
 
         if (was == busy) {
-            // Holding: a spark now and then, so a live sensor reads as live rather than as a
-            // block that happens to be lit.
             if (busy && level instanceof ServerLevel sl && level.getGameTime() % 6 == 0) {
                 Vec3 c = Vec3.atCenterOf(pos);
                 sl.sendParticles(ParticleTypes.ELECTRIC_SPARK, c.x, c.y + 0.45, c.z,
@@ -72,7 +62,6 @@ public class SensorBlockEntity extends BlockEntity {
         }
 
         level.setBlock(pos, state.setValue(SensorBlock.POWERED, busy), 3);
-        // Tell the neighbours, or a redstone line running off it never notices.
         level.updateNeighborsAt(pos, state.getBlock());
 
         if (!(level instanceof ServerLevel sl)) {
@@ -80,9 +69,6 @@ public class SensorBlockEntity extends BlockEntity {
         }
         Vec3 c = Vec3.atCenterOf(pos);
         if (busy) {
-            // Trip: a burst of sparks off every face, and two layered sounds -- a bulb's
-            // electrical thunk under a sharp contact click. One alone reads as a lamp or as
-            // a tripwire; together they read as a relay closing.
             sl.sendParticles(ParticleTypes.ELECTRIC_SPARK, c.x, c.y + 0.45, c.z,
                              14, 0.42, 0.42, 0.42, 0.08);
             sl.sendParticles(ParticleTypes.CRIT, c.x, c.y + 0.45, c.z,
@@ -113,7 +99,6 @@ public class SensorBlockEntity extends BlockEntity {
         anchorB = tag.contains(KEY_B) ? BlockPos.of(tag.getLong(KEY_B)) : null;
     }
 
-    /** Writes a link straight into a tag, for stamping onto the item when you bind it. */
     public static CompoundTag linkTag(BlockPos a, BlockPos b) {
         CompoundTag tag = new CompoundTag();
         tag.putLong(KEY_A, a.asLong());

@@ -23,13 +23,6 @@ jobs:
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      # We compile against Create, Create: Coasters Simulated and Sable, but must not
-      # redistribute them -- libs/ is gitignored. Fetch them here so CI has the same
-      # compile classpath a developer has locally.
-      #
-      # Nested jars matter: Create ships Registrate/Flywheel/Ponder and Sable ships
-      # sable-companion (which owns SubLevelAccess) inside META-INF/jarjar. Without
-      # unpacking those, compilation fails on missing supertypes.
       - name: Fetch compile-only mod dependencies
         run: |
           python3 - <<'PY'
@@ -54,7 +47,6 @@ jobs:
               urllib.request.urlretrieve(f["url"], dest)
               print(f"{slug}: {picked['version_number']} -> {f['filename']}")
 
-              # unpack any JarJar'd libraries so their types resolve
               with zipfile.ZipFile(dest) as z:
                   for n in z.namelist():
                       if n.startswith("META-INF/jarjar/") and n.endswith(".jar"):
@@ -65,16 +57,11 @@ jobs:
           PY
           ls -la libs/
 
-      # Git on Windows does not track the executable bit, so a re-add from a Windows
-      # checkout can land gradlew as 100644 and the runner fails with exit 126.
       - name: Build
         run: |
           chmod +x gradlew
           ./gradlew build --no-daemon --stacktrace
 
-      # A fixed artifact name means every download lands as the same file and you cannot
-      # tell two builds apart in the Downloads folder. Stamp the mod version, the run
-      # number and the short commit instead.
       - name: Name the artifact
         id: stamp
         run: |

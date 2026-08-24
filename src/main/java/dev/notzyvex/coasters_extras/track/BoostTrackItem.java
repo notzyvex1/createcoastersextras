@@ -11,35 +11,12 @@ import net.minecraft.world.item.TooltipFlag;
 
 import java.util.List;
 
-/**
- * The item behind every functional track.
- *
- * <p>Extends the base mod's {@link CoasterTrackItem} so we inherit their entire placement
- * mechanic -- anchorpoints, connections, chain lifts, the lot -- rather than reimplementing
- * it. Their item is an {@code Item}, not a {@code BlockItem}: coaster track is not placed
- * block by block, it is laid between anchorpoints by this item's {@code useOn}.
- *
- * <p>One class serves all five functional tracks, so the tooltip is chosen from the item's own
- * registry name. Adding a track means adding a case, and nothing else.
- */
 public class BoostTrackItem extends CoasterTrackItem {
 
     public BoostTrackItem(Item.Properties properties) {
         super(properties);
     }
 
-    /**
-     * The track material this item lays.
-     *
-     * <p>Resolved from the registry name for the same reason the tooltip below is: one class
-     * serves all five functional tracks, so there is no field to read. Keeping the mapping
-     * here rather than at the call site means a new functional track is still one case in one
-     * file.
-     *
-     * <p>Used to convert a curve that is already in the world -- a functional track IS its
-     * material, so swapping the material of a placed curve is the whole of "make this section
-     * a brake" without breaking and relaying it.
-     */
     public com.simibubi.create.content.trains.track.TrackMaterial material() {
         return switch (BuiltInRegistries.ITEM.getKey(this).getPath()) {
             case "boost_track"    -> ModTrackMaterials.BOOST;

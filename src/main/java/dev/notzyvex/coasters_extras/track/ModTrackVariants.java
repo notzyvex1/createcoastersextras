@@ -16,20 +16,6 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import java.util.EnumMap;
 import java.util.Map;
 
-/**
- * Registers the 16 cosmetic track variants through Create's public
- * {@link TrackMaterialFactory} -- the same entry point Create: Coasters Simulated uses for
- * its coaster track, and Create: Steam 'n' Rails uses for its ~20 variants.
- *
- * <p>{@code standardModels()} makes Create look for models under
- * {@code coasters_extras:block/track/<name>_track/}, which is exactly where the generated
- * model sets live.
- *
- * <p>These use Create's own {@link TrackBlockItem}, so they place and connect like any
- * Create track. They are deliberately NOT wired into the base mod's anchorpoint system:
- * that item is a connector operating on existing track, not a placer, so pointing it at a
- * different material needs separate work on their connection logic.
- */
 public final class ModTrackVariants {
 
     public static final Map<TrackVariant, TrackMaterial> MATERIALS =

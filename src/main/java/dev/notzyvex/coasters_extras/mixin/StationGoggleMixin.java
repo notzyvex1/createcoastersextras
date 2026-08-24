@@ -11,19 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.List;
 
-/**
- * Adds the station readout to the goggle tooltip.
- *
- * <p>Targets {@link KineticBlockEntity} rather than the anchorpoint itself because
- * {@code CoasterAnchorpointBlockEntity} does not declare {@code addToGoggleTooltip} -- it
- * inherits it -- and Mixin can only inject into a method the target class actually holds.
- * Injecting one level up and filtering by what the block entity can do keeps this to a single
- * cheap check for every other kinetic block in the game.
- *
- * <p>At RETURN rather than TAIL so the return value can be corrected: a station anchor with
- * no kinetic stats to report would otherwise answer "nothing to show" and Create would
- * discard the lines we just added.
- */
 @Mixin(value = KineticBlockEntity.class, remap = false)
 public class StationGoggleMixin {
 
@@ -37,7 +24,6 @@ public class StationGoggleMixin {
                 cir.setReturnValue(true);
             }
         } catch (Throwable ignored) {
-            // a tooltip is never worth breaking every kinetic block in the game over
         }
     }
 }

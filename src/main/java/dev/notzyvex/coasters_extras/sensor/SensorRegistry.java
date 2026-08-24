@@ -13,13 +13,6 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-/**
- * Registers the Sensor Block, its item and its block entity.
- *
- * <p>Its own registry rather than a line in {@code ModTracks}: this is the first thing in the
- * mod with a block entity of its own, and the balloons reach theirs by borrowing the base
- * mod's type through a mixin, which is not a pattern to extend.
- */
 public final class SensorRegistry {
 
     public static final DeferredRegister.Blocks BLOCKS =

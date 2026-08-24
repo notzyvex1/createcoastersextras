@@ -14,41 +14,17 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.item.ItemStack;
 
-/**
- * The Ponder scenes for our functional tracks.
- *
- * <p>All six run on the same structure: two anchorpoints, one curve between them, and a cart.
- * Only the curve's material differs, so once a reader has watched one scene they can read the
- * rest without relearning the layout.
- *
- * <h2>Why the cart is drawn the way it is</h2>
- *
- * <p>A coaster cart is invisible in a Ponder level. Its body is drawn by a Flywheel visual in
- * the world, and Ponder does not run those -- which is why the base mod ships
- * {@link CoasterCartExtrasElement} and draws carts itself. Using their element is the only way
- * to get a cart on screen here.
- *
- * <p>That element exposes fade and nothing else, so the cart does not move. An attempt to
- * flip-book it along the rail -- showing and hiding an element at each position -- read as a
- * glitch rather than as motion, because the elements fade rather than switch and overlapping
- * shows left carts stacked mid-fade. It sits still and the captions do the explaining.
- */
 public class TrackScenes {
 
     private static final BlockPos ANCHOR_IN = new BlockPos(3, 1, 7);
     private static final BlockPos ANCHOR_OUT = new BlockPos(11, 1, 7);
     private static final BlockPos FAKE_TRACK = new BlockPos(3, 2, 7);
     private static final BlockPos MIDDLE = new BlockPos(7, 2, 7);
-    /** Where the cart sits: on the track, near the anchorpoint it arrived from. */
     private static final BlockPos CART = new BlockPos(5, 2, 7);
-    /** Beside the track in the sensor scene: the block, and something for it to switch on. */
     private static final BlockPos SENSOR_BLOCK = new BlockPos(7, 1, 5);
     private static final BlockPos LAMP = new BlockPos(7, 1, 4);
 
-    /** The track runs along X; this is the yaw the base mod uses for that in its own scenes. */
     private static final float CART_YAW = 90.0F;
-
-    /* ------------------------------------------------------------------ boost */
 
     public static void boost(SceneBuilder builder, SceneBuildingUtil util) {
         CreateSceneBuilder scene = open(builder, util, "boost_track", "Making a coaster move");
@@ -98,8 +74,6 @@ public class TrackScenes {
         scene.markAsFinished();
     }
 
-    /* ----------------------------------------------------------------- splash */
-
     public static void splash(SceneBuilder builder, SceneBuildingUtil util) {
         CreateSceneBuilder scene = open(builder, util, "splash_track", "Running through water");
 
@@ -136,8 +110,6 @@ public class TrackScenes {
         CoasterCartPonderExtras.hide(scene, cart, Direction.UP);
         scene.markAsFinished();
     }
-
-    /* ----------------------------------------------------------------- launch */
 
     public static void launch(SceneBuilder builder, SceneBuildingUtil util) {
         CreateSceneBuilder scene = open(builder, util, "launch_track", "Launching a coaster");
@@ -182,12 +154,6 @@ public class TrackScenes {
         scene.markAsFinished();
     }
 
-    /* ---------------------------------------------------------------- bobsled */
-
-    /**
-     * Bobsled. Its lang keys have existed since the track was first added; the scene never did,
-     * so pressing W on it fell through to nothing.
-     */
     public static void bobsled(SceneBuilder builder, SceneBuildingUtil util) {
         CreateSceneBuilder scene = open(builder, util, "bobsled_track", "Riding without rails");
 
@@ -222,15 +188,6 @@ public class TrackScenes {
         scene.markAsFinished();
     }
 
-    /* ---------------------------------------------------------------- powered */
-
-    /**
-     * The Powered dial, shared by Boost, Brake and Launch.
-     *
-     * <p>Registered against all three items rather than getting a track of its own, because it
-     * is a setting rather than a block. Ponder pages through multiple scenes on one item, so
-     * this sits behind each track's own scene instead of competing with it.
-     */
     public static void powered(SceneBuilder builder, SceneBuildingUtil util) {
         CreateSceneBuilder scene = open(builder, util, "powered", "Running a track on redstone");
 
@@ -284,8 +241,6 @@ public class TrackScenes {
         scene.markAsFinished();
     }
 
-    /* ---------------------------------------------------------------- reverse */
-
     public static void reverse(SceneBuilder builder, SceneBuildingUtil util) {
         CreateSceneBuilder scene = open(builder, util, "reverse_track",
                 "Sending a coaster back");
@@ -330,8 +285,6 @@ public class TrackScenes {
         scene.markAsFinished();
     }
 
-    /* ------------------------------------------------------------------ brake */
-
     public static void brake(SceneBuilder builder, SceneBuildingUtil util) {
         CreateSceneBuilder scene = open(builder, util, "brake_track", "Slowing a coaster down");
 
@@ -365,8 +318,6 @@ public class TrackScenes {
         CoasterCartPonderExtras.hide(scene, cart, Direction.UP);
         scene.markAsFinished();
     }
-
-    /* ---------------------------------------------------------------- station */
 
     public static void station(SceneBuilder builder, SceneBuildingUtil util) {
         CreateSceneBuilder scene = open(builder, util, "station_track", "Stopping and dispatching");
@@ -405,7 +356,7 @@ public class TrackScenes {
                 .colored(PonderPalette.OUTPUT)
                 .text("Then it sets off again on its own.");
         scene.idle(30);
-        
+
         CoasterCartPonderExtras.hide(scene, cart, Direction.EAST);
         scene.idle(70);
 
@@ -418,8 +369,6 @@ public class TrackScenes {
         scene.markAsFinished();
     }
 
-    /* ----------------------------------------------------------------- sensor */
-
     public static void sensor(SceneBuilder builder, SceneBuildingUtil util) {
         CreateSceneBuilder scene = open(builder, util, "sensor_track", "Spotting a coaster");
 
@@ -428,7 +377,6 @@ public class TrackScenes {
                 .text("Sensor Track spots every coaster that crosses it.");
         scene.idle(110);
 
-        // The block it talks about, shown before it is explained.
         scene.world().showSection(util.select().fromTo(SENSOR_BLOCK, LAMP), Direction.DOWN);
         scene.overlay().showOutlineWithText(util.select().position(SENSOR_BLOCK), 110)
                 .attachKeyFrame().placeNearTarget().colored(PonderPalette.INPUT)
@@ -437,10 +385,6 @@ public class TrackScenes {
 
         ElementLink<CoasterCartExtrasElement> cart = showCart(scene, util);
 
-        // The crossing and the signal it produces, on the same beat: the block lights, the
-        // lamp lights, sparks fly. Driven explicitly rather than left to the real mechanic,
-        // because a genuine link stores absolute anchor positions and Ponder pastes the
-        // structure wherever it likes.
         scene.effects().indicateSuccess(MIDDLE);
         scene.world().modifyBlock(SENSOR_BLOCK,
                 st -> st.setValue(SensorBlock.POWERED, true), false);
@@ -463,8 +407,6 @@ public class TrackScenes {
         CoasterCartPonderExtras.hide(scene, cart, Direction.UP);
         scene.markAsFinished();
     }
-
-    /* --------------------------------------------------------------- slippery */
 
     public static void slippery(SceneBuilder builder, SceneBuildingUtil util) {
         CreateSceneBuilder scene = open(builder, util, "slippery_track", "Keeping the speed");
@@ -491,8 +433,6 @@ public class TrackScenes {
         scene.markAsFinished();
     }
 
-    /* ---------------------------------------------------------------- rainbow */
-
     public static void rainbow(SceneBuilder builder, SceneBuildingUtil util) {
         CreateSceneBuilder scene = open(builder, util, "rainbow_track", "Rainbow Coaster Track");
 
@@ -515,13 +455,10 @@ public class TrackScenes {
         scene.markAsFinished();
     }
 
-    /* ------------------------------------------------------------------ setup */
-
     private static net.createmod.ponder.api.scene.Selection track(SceneBuildingUtil util) {
         return util.select().fromTo(3, 1, 7, 11, 1, 7);
     }
 
-    /** Base plate then track, shared by every scene so they all read the same way. */
     private static CreateSceneBuilder open(SceneBuilder builder, SceneBuildingUtil util,
                                            String id, String title) {
         CreateSceneBuilder scene = new CreateSceneBuilder(builder);
@@ -531,27 +468,12 @@ public class TrackScenes {
         scene.showBasePlate();
         scene.idle(10);
 
-        // Layer 1 is the anchorpoints and the curve between them. The cart block in layer 2
-        // is deliberately never shown -- it renders as nothing useful in a Ponder level, and
-        // the cart the viewer sees is the base mod's element instead.
         scene.world().showSection(util.select().layer(1), Direction.DOWN);
         scene.world().showSection(util.select().position(FAKE_TRACK), Direction.DOWN);
         scene.idle(20);
         return scene;
     }
 
-    /**
-     * Puts one cart on the track and leaves it there.
-     *
-     * <p>An earlier version flip-booked the cart along the rail by showing and hiding an
-     * element at each position, using the gap between frames to convey speed. It read as a
-     * glitch rather than as motion: these elements fade rather than switch, so overlapping
-     * shows and hides left carts stacked on top of each other mid-fade.
-     *
-     * <p>A cart that simply sits on the track is honest and stable, and the captions carry the
-     * explanation. Ponder cannot animate this element -- it exposes fade and nothing else --
-     * so pretending otherwise was always going to look wrong.
-     */
     private static ElementLink<CoasterCartExtrasElement> showCart(CreateSceneBuilder scene,
                                                              SceneBuildingUtil util) {
         ElementLink<CoasterCartExtrasElement> cart = CoasterCartPonderExtras.show(

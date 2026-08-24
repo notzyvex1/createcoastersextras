@@ -12,20 +12,11 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-/**
- * Draws our section banners over the creative grid.
- *
- * <p>Extends {@link AbstractContainerScreen} so {@code leftPos} and {@code topPos} are
- * reachable -- they are protected on the superclass, and the banner has to be positioned
- * relative to the panel rather than the window.
- *
- * <p>Injected at TAIL so the banners land above the slots but below tooltips.
- */
 @Mixin(CreativeModeInventoryScreen.class)
 public abstract class CreativeTabBannerMixin
         extends AbstractContainerScreen<CreativeModeInventoryScreen.ItemPickerMenu> {
 
-    private CreativeTabBannerMixin() { super(null, null, null); }   // never called
+    private CreativeTabBannerMixin() { super(null, null, null); }
 
     @Shadow private static CreativeModeTab selectedTab;
 

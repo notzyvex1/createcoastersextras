@@ -3,23 +3,10 @@ package dev.notzyvex.coasters_extras.net;
 import dev.notzyvex.coasters_extras.CoastersExtras;
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 
-/**
- * "Make the curve between these two anchorpoints use this material."
- *
- * <p>Sent when a player right-clicks a placed curve while holding a block. The curve under
- * the crosshair is client knowledge -- Create publishes it, the server has no idea where
- * anyone is pointing -- but the change has to happen server-side or it lasts until the next
- * chunk load. So the client names the two ends and the material, and the server does the work.
- *
- * <p>Only the two positions travel, not the curve. Anything the client sent about the curve
- * itself would be a client-supplied description of world state, and the server would have to
- * verify it anyway; the anchorpoints are enough to find the real one.
- */
 public record RepaintPayload(BlockPos anchor, BlockPos peer, ResourceLocation material)
         implements CustomPacketPayload {
 

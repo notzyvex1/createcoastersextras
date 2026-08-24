@@ -24,8 +24,6 @@ public final class ModBlocks {
 
     static {
         for (BalloonColor color : BalloonColor.values()) {
-            // Reuse THEIR block properties rather than duplicating values, so we track
-            // any tuning they do upstream.
             DeferredBlock<ExtraBalloonBlock> block = BLOCKS.register(color.blockName(),
                     () -> new ExtraBalloonBlock(color, RedBalloonBlock.defaultProperties()));
             BALLOONS.put(color, block);

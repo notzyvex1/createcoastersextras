@@ -15,19 +15,8 @@ import net.minecraft.world.level.block.Block;
 
 import java.util.List;
 
-/**
- * Balloon item tooltip, styled to match Create (and therefore the base mod's red balloon),
- * so ours sit alongside theirs without looking bolted on.
- *
- * <p>Collapsed: {@code Hold [Shift] for Summary}.
- * Expanded: a coloured flavour line, a summary, then condition/behaviour pairs.
- *
- * <p>Text uses Create's {@code _underscore_} convention to mark highlighted words; see
- * {@link #highlight}.
- */
 public class BalloonBlockItem extends BlockItem {
 
-    /** Create's palette, so our tooltips match theirs exactly. */
     private static final Style PASSIVE   = Style.EMPTY.withColor(ChatFormatting.DARK_GRAY);
     private static final Style KEYBIND   = Style.EMPTY.withColor(ChatFormatting.GRAY);
     private static final Style SUMMARY   = Style.EMPTY.withColor(ChatFormatting.GRAY);
@@ -47,10 +36,6 @@ public class BalloonBlockItem extends BlockItem {
                                 List<Component> tooltip, TooltipFlag flag) {
         super.appendHoverText(stack, ctx, tooltip, flag);
 
-        // Guarded, and the check reads the environment rather than the level: appendHoverText
-        // is a common method, and anything that calls it server-side -- some mods build
-        // tooltips there -- would otherwise try to resolve a client-only class and take the
-        // dedicated server down with it.
         if (FMLEnvironment.dist != Dist.CLIENT || !coasters_extras$shiftDown()) {
             tooltip.add(Component.literal("Hold ").setStyle(PASSIVE)
                     .append(Component.literal("[Shift]").setStyle(KEYBIND))
@@ -81,7 +66,6 @@ public class BalloonBlockItem extends BlockItem {
         tooltip.add(Component.empty());
     }
 
-    /** Renders Create's {@code _underscored_} segments in the highlight colour. */
     private static MutableComponent highlight(String text, Style base) {
         MutableComponent out = Component.empty();
         boolean hot = false;
@@ -94,7 +78,6 @@ public class BalloonBlockItem extends BlockItem {
         return out;
     }
 
-    /** Flat dye colour, or a per-character sweep for rainbow. */
     private MutableComponent colouredName() {
         String name = prettyColourName();
 
@@ -106,7 +89,7 @@ public class BalloonBlockItem extends BlockItem {
         MutableComponent out = Component.empty();
         int len = Math.max(1, name.length() - 1);
         for (int i = 0; i < name.length(); i++) {
-            float hue = (float) i / len * 0.78F;   // red -> violet, same range as the texture
+            float hue = (float) i / len * 0.78F;
             int rgb = java.awt.Color.HSBtoRGB(hue, 0.85F, 1.0F) & 0xFFFFFF;
             out.append(Component.literal(String.valueOf(name.charAt(i)))
                     .withStyle(Style.EMPTY.withColor(TextColor.fromRgb(rgb))));
@@ -123,7 +106,6 @@ public class BalloonBlockItem extends BlockItem {
         }
         return sb.toString();
     }
-    /** Isolated so {@code Screen} is only ever resolved on a client. */
     private static boolean coasters_extras$shiftDown() {
         return net.minecraft.client.gui.screens.Screen.hasShiftDown();
     }
