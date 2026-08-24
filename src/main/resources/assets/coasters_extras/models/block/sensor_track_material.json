@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "coasters_extras:block/track/sensor_track/standard_track",
+    "particle": "coasters_extras:block/track/sensor_track/standard_track"
+  }
+}

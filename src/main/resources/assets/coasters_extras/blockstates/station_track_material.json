@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "coasters_extras:block/station_track_material"
+    }
+  }
+}

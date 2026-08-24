@@ -1,0 +1,24 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "W": {
+      "item": "minecraft:gray_wool"
+    },
+    "S": {
+      "item": "minecraft:string"
+    },
+    "N": {
+      "item": "minecraft:iron_nugget"
+    }
+  },
+  "pattern": [
+    "W",
+    "S",
+    "N"
+  ],
+  "result": {
+    "count": 1,
+    "id": "coasters_extras:gray_balloon"
+  }
+}

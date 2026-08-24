@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "coasters_extras:block/tinted_glass_track_material"
+    }
+  }
+}

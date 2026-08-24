@@ -1,0 +1,13 @@
+{
+  "_comment": "URLs and image host for the two store pages. Fill in what you have; anything left as PUT_YOUR_URL_HERE is skipped rather than linked to a dead page.",
+  "image_base": "PASTE_YOUR_IMAGE_URL_BASE_HERE",
+  "_image_base_note": "Where the files in docs/images are served from. For raw GitHub the value is https://raw.githubusercontent.com/notzyvex1/create-coasters-extras/main/docs/images -- but that only works once the repository is public, since raw returns 404 for private repos. Otherwise upload docs/images to the CurseForge project's Images tab or the Modrinth gallery and use that CDN prefix.",
+  "socials": {
+    "Modrinth": "https://modrinth.com/mod/create-coasters-extras",
+    "CurseForge": "https://www.curseforge.com/minecraft/mc-mods/create-coasters-extras",
+    "GitHub": "https://github.com/notzyvex1/create-coasters-extras",
+    "Discord": "https://discord.gg/tCu7ccjYHv",
+    "TikTok": "PUT_YOUR_URL_HERE",
+    "Ko-fi": "https://ko-fi.com/notzyvex"
+  }
+}

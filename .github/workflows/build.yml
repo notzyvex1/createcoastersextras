@@ -1,0 +1,88 @@
+name: Build
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Set up Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      # We compile against Create, Create: Coasters Simulated and Sable, but must not
+      # redistribute them -- libs/ is gitignored. Fetch them here so CI has the same
+      # compile classpath a developer has locally.
+      #
+      # Nested jars matter: Create ships Registrate/Flywheel/Ponder and Sable ships
+      # sable-companion (which owns SubLevelAccess) inside META-INF/jarjar. Without
+      # unpacking those, compilation fails on missing supertypes.
+      - name: Fetch compile-only mod dependencies
+        run: |
+          python3 - <<'PY'
+          import json, os, urllib.request, zipfile
+
+          os.makedirs("libs", exist_ok=True)
+
+          def get(url):
+              req = urllib.request.Request(url, headers={"User-Agent": "coastersextras-ci/1.0"})
+              return json.load(urllib.request.urlopen(req, timeout=90))
+
+          for slug in ("create", "create-coasters-simulated", "sable"):
+              picked = None
+              for v in get(f"https://api.modrinth.com/v2/project/{slug}/version"):
+                  if "1.21.1" in v["game_versions"] and "neoforge" in v["loaders"]:
+                      picked = v
+                      break
+              if picked is None:
+                  raise SystemExit(f"::error::no 1.21.1 NeoForge build found for {slug}")
+              f = next(x for x in picked["files"] if x["filename"].endswith(".jar"))
+              dest = os.path.join("libs", f["filename"])
+              urllib.request.urlretrieve(f["url"], dest)
+              print(f"{slug}: {picked['version_number']} -> {f['filename']}")
+
+              # unpack any JarJar'd libraries so their types resolve
+              with zipfile.ZipFile(dest) as z:
+                  for n in z.namelist():
+                      if n.startswith("META-INF/jarjar/") and n.endswith(".jar"):
+                          out = os.path.join("libs", os.path.basename(n))
+                          with open(out, "wb") as fh:
+                              fh.write(z.read(n))
+                          print(f"    nested -> {os.path.basename(n)}")
+          PY
+          ls -la libs/
+
+      - name: Build
+        run: ./gradlew build --no-daemon --stacktrace
+
+      # A fixed artifact name means every download lands as the same file and you cannot
+      # tell two builds apart in the Downloads folder. Stamp the mod version, the run
+      # number and the short commit instead.
+      - name: Name the artifact
+        id: stamp
+        run: |
+          VERSION=$(grep -E '^mod_version=' gradle.properties | cut -d= -f2 | tr -d '[:space:]')
+          SHORT=$(git rev-parse --short HEAD)
+          echo "artifact=coasters_extras-${VERSION}-build${GITHUB_RUN_NUMBER}-${SHORT}" >> "$GITHUB_OUTPUT"
+          echo "naming artifact: coasters_extras-${VERSION}-build${GITHUB_RUN_NUMBER}-${SHORT}"
+
+      - name: Upload jar
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.stamp.outputs.artifact }}
+          path: build/libs/*.jar
+          if-no-files-found: error

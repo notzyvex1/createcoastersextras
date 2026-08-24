@@ -1,0 +1,36 @@
+﻿{
+    "required":  true,
+    "minVersion":  "0.8.5",
+    "package":  "dev.notzyvex.coasters_extras.mixin",
+    "compatibilityLevel":  "JAVA_21",
+    "mixins":  [
+                   "BlockEntityTypeAccessor",
+                   "LivingEntityJumpAccessor",
+                   "BalloonResolveMixin",
+                   "BalloonAttachInteractionMixin",
+                   "BalloonSpawnerMixin",
+                   "CoasterTrackPlacementMixin",
+                   "CoasterPathGraphManagerMixin",
+                   "CoasterCurveRailInstancingMixin",
+                   "ResourceLocationCoasterAliasMixin",
+                   "CoasterCartDriveMixin",
+                   "AnchorpointSpeedControlMixin",
+                   "AnchorpointPasteRepairMixin",
+                   "CoasterGuideBobsledMixin"
+               ],
+    "injectors":  {
+                      "defaultRequire":  1
+                  },
+    "client":  [
+                   "PickBlockOurTrackMixin",
+                   "CreativeTabContentsMixin",
+                   "CreativeTabBannerMixin",
+                   "CreativeTabScrollMixin",
+                   "CenterBeamMixin",
+                   "RainbowTrackTintMixin",
+                   "StationGoggleMixin",
+                   "CurveBerMaterialsMixin",
+                   "CurveVisualAnchorHardwareMixin",
+                   "BrakingWheelTintMixin"
+               ]
+}

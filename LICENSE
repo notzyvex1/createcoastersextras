@@ -1,0 +1,63 @@
+# Licence
+
+**Create: Coasters Extras** — Copyright © 2026 NotZyvex. **All Rights Reserved.**
+
+## You may
+
+- Play the mod, in singleplayer or on any server.
+- Record, stream and monetise footage of it. No permission needed and no credit required,
+  though a link is always welcome.
+- Include it in a **free, publicly available** modpack, provided the pack links back to an
+  official download page (Modrinth or CurseForge).
+- Modify your own copy for personal use.
+
+## You may not
+
+- Reupload the mod, or any part of it, anywhere. Link to the official pages instead.
+- Redistribute a modified build.
+- Reuse its code, textures, models or other assets in another project.
+- Include it in a paid modpack, or in any pack behind a paywall, early-access tier or
+  ad-gateway link.
+
+## Earlier releases
+
+Versions published under the MIT licence remain MIT **for those releases**. This licence
+applies from the version it ships with onward. Changing the licence going forward does not
+retroactively revoke rights already granted on an earlier release.
+
+## Third-party material
+
+Track models and textures are derived from **Create: Coasters Simulated** by SilverGold,
+used under its MIT licence. The balloon textures are recolours of that mod's original red
+balloon. The MIT licence and copyright notice for that work are reproduced below, and those
+files remain subject to it.
+
+```
+MIT License
+
+Copyright (c) SilverGold
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this
+software and associated documentation files (the "Software"), to deal in the Software
+without restriction, including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+```
+
+Minecraft is a trademark of Mojang Synergies AB. This project is not affiliated with,
+endorsed by, or associated with Mojang or Microsoft.
+
+## No warranty
+
+The mod is provided as is, without warranty of any kind. The author is not liable for any
+damage or data loss arising from its use.

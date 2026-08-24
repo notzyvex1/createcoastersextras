@@ -1,0 +1,6 @@
+{
+  "variants": {
+    "powered=false": { "model": "coasters_extras:block/sensor_block" },
+    "powered=true":  { "model": "coasters_extras:block/sensor_block_on" }
+  }
+}

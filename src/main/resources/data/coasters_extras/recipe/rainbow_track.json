@@ -1,0 +1,31 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "coasters_extras:coaster_tracks"
+    },
+    {
+      "tag": "c:dyes"
+    },
+    {
+      "tag": "c:dyes"
+    },
+    {
+      "tag": "c:dyes"
+    },
+    {
+      "tag": "c:dyes"
+    },
+    {
+      "tag": "c:dyes"
+    },
+    {
+      "tag": "c:dyes"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "coasters_extras:rainbow_track"
+  }
+}

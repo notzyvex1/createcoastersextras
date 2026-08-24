@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "pattern": [
+    " L ",
+    "IAI"
+  ],
+  "key": {
+    "L": { "item": "minecraft:lever" },
+    "A": { "item": "create:andesite_alloy" },
+    "I": { "item": "minecraft:iron_ingot" }
+  },
+  "result": {
+    "count": 1,
+    "id": "coasters_extras:coaster_controls"
+  }
+}

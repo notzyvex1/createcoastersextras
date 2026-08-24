@@ -1,0 +1,24 @@
+{
+	"format_version": "1.21.11",
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "coasters_extras:block/track/stripped_crimson_stem_track/track_anchorpoint_connection",
+		"1": "coasters_extras:block/track/stripped_crimson_stem_track/track_anchorpoint_connection_side",
+		"particle": "coasters_extras:block/track/stripped_crimson_stem_track/track_anchorpoint_connection"
+	},
+	"elements": [
+		{
+			"from": [2, 8.5, 3],
+			"to": [14, 14.5, 13],
+			"rotation": {"angle": 0, "axis": "y", "origin": [8, 12, 8]},
+			"faces": {
+				"north": {"uv": [3, 1, 13, 7], "texture": "#1", "cullface": "north"},
+				"east": {"uv": [3, 1, 13, 7], "texture": "#1", "cullface": "east"},
+				"south": {"uv": [3, 1, 13, 7], "texture": "#1", "cullface": "south"},
+				"west": {"uv": [3, 1, 13, 7], "texture": "#1", "cullface": "west"},
+				"up": {"uv": [2, 3, 14, 13], "texture": "#0", "cullface": "up"},
+				"down": {"uv": [2, 3, 14, 13], "texture": "#0"}
+			}
+		}
+	]
+}

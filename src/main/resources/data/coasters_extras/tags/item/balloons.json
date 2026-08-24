@@ -1,0 +1,25 @@
+{
+  "replace": false,
+  "values": [
+    "coasters_extras:white_balloon",
+    "coasters_extras:orange_balloon",
+    "coasters_extras:magenta_balloon",
+    "coasters_extras:light_blue_balloon",
+    "coasters_extras:yellow_balloon",
+    "coasters_extras:lime_balloon",
+    "coasters_extras:pink_balloon",
+    "coasters_extras:gray_balloon",
+    "coasters_extras:light_gray_balloon",
+    "coasters_extras:cyan_balloon",
+    "coasters_extras:purple_balloon",
+    "coasters_extras:blue_balloon",
+    "coasters_extras:brown_balloon",
+    "coasters_extras:green_balloon",
+    "coasters_extras:black_balloon",
+    "coasters_extras:rainbow_balloon",
+    {
+      "id": "simulatedcoasters:red_balloon",
+      "required": false
+    }
+  ]
+}

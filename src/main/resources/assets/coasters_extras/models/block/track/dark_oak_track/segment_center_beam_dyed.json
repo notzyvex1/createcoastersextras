@@ -1,0 +1,12 @@
+{
+	"ambientocclusion": false,
+	"loader": "neoforge:obj",
+	"flip_v": true,
+	"model": "coasters_extras:models/block/track/dark_oak_track/segment_center_beam.obj",
+	"textures": {
+		"0": "coasters_extras:block/track/dark_oak_track/middle_beam_dyed",
+		"1": "coasters_extras:block/track/dark_oak_track/standard_track_dyed",
+		"2": "coasters_extras:block/track/dark_oak_track/standard_track_dyed",
+		"particle": "create:block/industrial_iron_block"
+	}
+}

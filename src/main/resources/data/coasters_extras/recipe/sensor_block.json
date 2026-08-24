@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "redstone",
+  "pattern": [
+    " R ",
+    "IAI",
+    " T "
+  ],
+  "key": {
+    "R": { "item": "minecraft:redstone" },
+    "I": { "item": "minecraft:iron_ingot" },
+    "A": { "item": "create:andesite_alloy" },
+    "T": { "item": "minecraft:redstone_torch" }
+  },
+  "result": { "count": 1, "id": "coasters_extras:sensor_block" }
+}

@@ -1,0 +1,7 @@
+* text=auto eol=lf
+*.png  binary
+*.obj  text eol=lf
+*.mtl  text eol=lf
+*.bbmodel text eol=lf
+*.jar  binary
+*.zip  binary

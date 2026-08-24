@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "coasters_extras:item/nether_quartz_ore_track"
+  }
+}

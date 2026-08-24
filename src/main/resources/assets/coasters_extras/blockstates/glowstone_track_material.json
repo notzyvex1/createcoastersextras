@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "coasters_extras:block/glowstone_track_material"
+    }
+  }
+}

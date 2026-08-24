@@ -1,0 +1,358 @@
+{
+  "parent": "minecraft:block/block",
+  "textures": {
+    "4": "coasters_extras:block/controls/controls",
+    "5": "coasters_extras:block/controls/controls_frame",
+    "6": "create:block/gauge",
+    "7": "create:block/industrial_iron_block",
+    "1_7": "coasters_extras:block/controls/controls",
+    "particle": "create:block/bogey/particle"
+  },
+  "elements": [
+    {
+      "name": "handle_pivot",
+      "from": [
+        6,
+        8,
+        1
+      ],
+      "to": [
+        10,
+        11,
+        5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            6,
+            5,
+            10,
+            8
+          ],
+          "texture": "#6"
+        },
+        "south": {
+          "uv": [
+            6,
+            5,
+            10,
+            8
+          ],
+          "texture": "#6"
+        },
+        "west": {
+          "uv": [
+            1,
+            5,
+            5,
+            8
+          ],
+          "texture": "#6"
+        },
+        "east": {
+          "uv": [
+            11,
+            5,
+            15,
+            8
+          ],
+          "texture": "#6"
+        },
+        "up": {
+          "uv": [
+            6,
+            1,
+            10,
+            5
+          ],
+          "texture": "#6"
+        },
+        "down": {
+          "uv": [
+            6,
+            11,
+            10,
+            15
+          ],
+          "texture": "#6"
+        }
+      }
+    },
+    {
+      "name": "handle_post",
+      "from": [
+        7,
+        10,
+        2
+      ],
+      "to": [
+        9,
+        15,
+        4
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            7,
+            1,
+            9,
+            6
+          ],
+          "texture": "#7"
+        },
+        "south": {
+          "uv": [
+            7,
+            1,
+            9,
+            6
+          ],
+          "texture": "#7"
+        },
+        "west": {
+          "uv": [
+            2,
+            1,
+            4,
+            6
+          ],
+          "texture": "#7"
+        },
+        "east": {
+          "uv": [
+            12,
+            1,
+            14,
+            6
+          ],
+          "texture": "#7"
+        },
+        "up": {
+          "uv": [
+            7,
+            2,
+            9,
+            4
+          ],
+          "texture": "#7"
+        },
+        "down": {
+          "uv": [
+            7,
+            12,
+            9,
+            14
+          ],
+          "texture": "#7"
+        }
+      }
+    },
+    {
+      "name": "handle_grip",
+      "from": [
+        3,
+        15,
+        2
+      ],
+      "to": [
+        13,
+        17,
+        4
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            3,
+            0.0,
+            13,
+            1
+          ],
+          "texture": "#7"
+        },
+        "south": {
+          "uv": [
+            3,
+            0.0,
+            13,
+            1
+          ],
+          "texture": "#7"
+        },
+        "west": {
+          "uv": [
+            2,
+            0.0,
+            4,
+            1
+          ],
+          "texture": "#7"
+        },
+        "east": {
+          "uv": [
+            12,
+            0.0,
+            14,
+            1
+          ],
+          "texture": "#7"
+        },
+        "up": {
+          "uv": [
+            3,
+            2,
+            13,
+            4
+          ],
+          "texture": "#7"
+        },
+        "down": {
+          "uv": [
+            3,
+            12,
+            13,
+            14
+          ],
+          "texture": "#7"
+        }
+      }
+    },
+    {
+      "name": "handle_cap_left",
+      "from": [
+        2,
+        14,
+        1
+      ],
+      "to": [
+        4,
+        18,
+        5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            12,
+            0.0,
+            14,
+            2
+          ],
+          "texture": "#6"
+        },
+        "south": {
+          "uv": [
+            2,
+            0.0,
+            4,
+            2
+          ],
+          "texture": "#6"
+        },
+        "west": {
+          "uv": [
+            1,
+            0.0,
+            5,
+            2
+          ],
+          "texture": "#6"
+        },
+        "east": {
+          "uv": [
+            11,
+            0.0,
+            15,
+            2
+          ],
+          "texture": "#6"
+        },
+        "up": {
+          "uv": [
+            2,
+            1,
+            4,
+            5
+          ],
+          "texture": "#6"
+        },
+        "down": {
+          "uv": [
+            2,
+            11,
+            4,
+            15
+          ],
+          "texture": "#6"
+        }
+      }
+    },
+    {
+      "name": "handle_cap_right",
+      "from": [
+        12,
+        14,
+        1
+      ],
+      "to": [
+        14,
+        18,
+        5
+      ],
+      "faces": {
+        "north": {
+          "uv": [
+            2,
+            0.0,
+            4,
+            2
+          ],
+          "texture": "#6"
+        },
+        "south": {
+          "uv": [
+            12,
+            0.0,
+            14,
+            2
+          ],
+          "texture": "#6"
+        },
+        "west": {
+          "uv": [
+            1,
+            0.0,
+            5,
+            2
+          ],
+          "texture": "#6"
+        },
+        "east": {
+          "uv": [
+            11,
+            0.0,
+            15,
+            2
+          ],
+          "texture": "#6"
+        },
+        "up": {
+          "uv": [
+            12,
+            1,
+            14,
+            5
+          ],
+          "texture": "#6"
+        },
+        "down": {
+          "uv": [
+            12,
+            11,
+            14,
+            15
+          ],
+          "texture": "#6"
+        }
+      }
+    }
+  ]
+}

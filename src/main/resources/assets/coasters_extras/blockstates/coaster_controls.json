@@ -1,0 +1,9 @@
+{
+  "_comment": "Throttle no longer picks a model -- the block entity renderer animates the handle. Each facing points at the single console model; the partial keys match any throttle value.",
+  "variants": {
+    "facing=north": { "model": "coasters_extras:block/coaster_controls" },
+    "facing=east":  { "model": "coasters_extras:block/coaster_controls", "y": 90 },
+    "facing=south": { "model": "coasters_extras:block/coaster_controls", "y": 180 },
+    "facing=west":  { "model": "coasters_extras:block/coaster_controls", "y": 270 }
+  }
+}

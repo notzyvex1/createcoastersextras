@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "coasters_extras:block/reverse_track_material"
+    }
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "coasters_extras:block/copper_track_material"
+    }
+  }
+}

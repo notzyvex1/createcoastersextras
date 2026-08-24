@@ -1,0 +1,12 @@
+{
+	"ambientocclusion": false,
+	"loader": "neoforge:obj",
+	"flip_v": true,
+	"model": "coasters_extras:models/block/track/orange_concrete_track/segment_left.obj",
+	"textures": {
+		"0": "coasters_extras:block/track/orange_concrete_track/standard_track_dyed",
+		"1": "coasters_extras:block/track/orange_concrete_track/standard_track_dyed",
+		"2": "coasters_extras:block/track/orange_concrete_track/standard_track_dyed",
+		"particle": "create:block/industrial_iron_block"
+	}
+}

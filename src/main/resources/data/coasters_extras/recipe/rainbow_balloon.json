@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "B": {
+      "tag": "coasters_extras:balloons"
+    },
+    "R": {
+      "item": "minecraft:red_dye"
+    },
+    "G": {
+      "item": "minecraft:green_dye"
+    },
+    "U": {
+      "item": "minecraft:blue_dye"
+    },
+    "Y": {
+      "item": "minecraft:yellow_dye"
+    }
+  },
+  "pattern": [
+    " R ",
+    "UBG",
+    " Y "
+  ],
+  "result": {
+    "count": 1,
+    "id": "coasters_extras:rainbow_balloon"
+  }
+}

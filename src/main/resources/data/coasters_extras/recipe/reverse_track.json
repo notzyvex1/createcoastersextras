@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "tag": "coasters_extras:coaster_tracks"
+    },
+    {
+      "item": "minecraft:ender_pearl"
+    },
+    {
+      "item": "create:andesite_alloy"
+    }
+  ],
+  "result": {
+    "count": 1,
+    "id": "coasters_extras:reverse_track"
+  }
+}
