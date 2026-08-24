@@ -2,8 +2,7 @@
 
 An addon for **[Create: Coasters Simulated](https://modrinth.com/mod/create-coasters-simulated)** by SilverGold. It adds 16 balloons and 23 tracks: every dye colour the base mod was missing, 18 cosmetic material variants, and five functional tracks with a Create-style speed dial.
 
-<!-- Banner image: supplied by the author. Drop the file at branding/banner.png. -->
-![banner](branding/banner.png)
+![Create: Coasters Extras](https://cdn.modrinth.com/data/cached_images/1ac382fdfbd341d106604c4c5ea284ea4aa471d0.png)
 
 In Coasters Simulated you place **anchorpoints** and the track is a bezier curve strung between them. That shapes most of what follows: materials apply to a whole curve, and the speed dial lives on the anchorpoint at either end.
 

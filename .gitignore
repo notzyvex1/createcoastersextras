@@ -61,3 +61,20 @@ block_names.txt
 
 # previous repo history, kept locally as a backup
 .git.old/
+
+# Store pages, working notes and art sources -- kept locally, not published.
+# The repo is the mod: source, resources, build files, licence.
+CURSEFORGE.md
+CURSEFORGE-IMAGES.md
+MODRINTH.md
+MODRINTH-IMAGES.md
+RELEASE-*.md
+REPLIES.md
+PROJECT.md
+UPSTREAM-BUG-REPORT.md
+*.bbmodel
+/tools/
+/docs/
+/showcase/
+/branding/
+/assets/
