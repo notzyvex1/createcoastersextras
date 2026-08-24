@@ -87,8 +87,8 @@ Sable is a dependency of Coasters Simulated. Launchers that resolve dependencies
 Requires **JDK 21**. Use the bundled Gradle wrapper — do not install Gradle separately.
 
 ```bash
-git clone https://github.com/notzyvex1/create-coasters-extras
-cd create-coasters-extras
+git clone https://github.com/notzyvex1/createcoastersextras
+cd createcoastersextras
 # populate libs/ first — see below
 ./gradlew build          # Windows: gradlew.bat build
 ```
@@ -103,7 +103,7 @@ compileOnly fileTree(dir: 'libs', include: ['*.jar'])
 
 So `libs/` needs the Coasters Simulated jar plus Create, Registrate, Flywheel, Ponder, Sable (Rapier and Companion included) and Veil. The sources import both `com.simibubi.create` and `dev.silvergold.simulatedcoasters`, so compilation fails without them. Everything there is `compileOnly` — none of it is bundled into the output jar; all of it is declared as a runtime dependency in `neoforge.mods.toml`.
 
-Bugs and requests: [GitHub issues](https://github.com/notzyvex1/create-coasters-extras/issues).
+Bugs and requests: [GitHub issues](https://github.com/notzyvex1/createcoastersextras/issues).
 
 ---
 

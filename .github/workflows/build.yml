@@ -65,8 +65,12 @@ jobs:
           PY
           ls -la libs/
 
+      # Git on Windows does not track the executable bit, so a re-add from a Windows
+      # checkout can land gradlew as 100644 and the runner fails with exit 126.
       - name: Build
-        run: ./gradlew build --no-daemon --stacktrace
+        run: |
+          chmod +x gradlew
+          ./gradlew build --no-daemon --stacktrace
 
       # A fixed artifact name means every download lands as the same file and you cannot
       # tell two builds apart in the Downloads folder. Stamp the mod version, the run

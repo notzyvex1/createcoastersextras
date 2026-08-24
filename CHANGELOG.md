@@ -353,4 +353,4 @@ Boost and brake take their target speed from the dial on the anchorpoints at eit
 - The base mod's red balloon is shown in the Balloons section so the colour set is complete in one place. It is *not* re-registered — there is still exactly one red balloon in the game, and no duplicate recipe.
 - Nothing the base mod registers is replaced or altered, and the boost and brake behaviour applies only to this mod's own track materials.
 
-[0.7.3]: https://github.com/notzyvex1/create-coasters-extras/releases/tag/v0.7.3
+[0.7.3]: https://github.com/notzyvex1/createcoastersextras/releases/tag/v0.7.3

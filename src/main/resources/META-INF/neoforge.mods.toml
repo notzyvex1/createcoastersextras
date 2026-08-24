@@ -1,7 +1,7 @@
 modLoader = "javafml"
 loaderVersion = "${loader_version_range}"
 license = "${mod_license}"
-issueTrackerURL = "https://github.com/notzyvex1/create-coasters-extras/issues"
+issueTrackerURL = "https://github.com/notzyvex1/createcoastersextras/issues"
 
 [[mods]]
 modId = "${mod_id}"
